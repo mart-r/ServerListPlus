@@ -136,6 +136,11 @@ public class ProtocolLibHandler extends StatusHandler {
                         if (message.isEmpty()) {
                             ping.setPlayers(Collections.<WrappedGameProfile>emptyList());
                         } else if (response.useMultipleSamples()) {
+                            try {
+                                message = PlaceholderAPI.setPlaceholders(event.getPlayer().getPlayer(), message);
+                            } catch (UnsupportedOperationException e) {
+                                bukkit.getLogger().log(Level.SEVERE, "Unsuitable placeholder when attempting to set placeholder to serverlist player hover: " + e.getMessage());
+                            }
                             count = response.getDynamicSamples();
 
                             ping.setPlayers(Iterables.transform(
