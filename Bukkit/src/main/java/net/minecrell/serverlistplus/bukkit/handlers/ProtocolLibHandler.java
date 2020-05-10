@@ -34,8 +34,11 @@ import net.minecrell.serverlistplus.core.status.StatusRequest;
 import net.minecrell.serverlistplus.core.status.StatusResponse;
 import net.minecrell.serverlistplus.core.util.Helper;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+
 import java.net.InetSocketAddress;
 import java.util.Collections;
+import java.util.logging.Level;
 
 public class ProtocolLibHandler extends StatusHandler {
     private StatusPacketListener listener;
@@ -99,7 +102,14 @@ public class ProtocolLibHandler extends StatusHandler {
             // Description is modified in BukkitEventHandler, but we modify it here again,
             // because the BukkitEventHandler has no access to information like virtual hosts.
             String message = response.getDescription();
-            if (message != null) ping.setMotD(message);
+            if (message != null) {
+                try {
+                    message = PlaceholderAPI.setPlaceholders(event.getPlayer().getPlayer(), message);
+                } catch (UnsupportedOperationException e) {
+                    bukkit.getLogger().log(Level.SEVERE, "Unsuitable placeholder when attempting to set placeholder to serverlist description: " + e.getMessage());
+                }
+                ping.setMotD(message);
+            }
 
             // Version name
             message = response.getVersion();

@@ -93,6 +93,7 @@ subprojects {
 
 repositories {
     maven("https://jitpack.io/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -102,7 +103,8 @@ dependencies {
     compile("org.ocpsoft.prettytime:prettytime:4.0.1.Final")
 
     compileOnly("org.slf4j:slf4j-api:1.7.25")
-    compileOnly("com.github.DevLeoko:AdvancedBan:4171f1a") { isTransitive = false }
+    compileOnly("com.github.DevLeoko:AdvancedBan:2.1.7") { isTransitive = false }
+    compileOnly("me.clip:placeholderapi:2.10.6") { isTransitive = false }
 
     testCompile("junit:junit:4.12")
     testCompile("org.mockito:mockito-core:2.20.0")
